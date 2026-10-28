@@ -155,6 +155,19 @@ From the project root, run:
 
 The automated backend tests help verify the application's behavior.
 
+
+## Screenshots
+
+### Dashboard — Overview
+
+![CareerBoard Dashboard Overview](dashboard_A.png)
+
+### Dashboard — Application Tracking
+
+![CareerBoard Application Tracking](dashboard_B.png)
+
+
+
 ## Future Improvements
 
 - User authentication and individual accounts
