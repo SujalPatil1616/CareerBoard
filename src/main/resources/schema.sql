@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS job_applications (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    company VARCHAR(120) NOT NULL,
+    role VARCHAR(120) NOT NULL,
+    job_url VARCHAR(500),
+    status VARCHAR(20) NOT NULL,
+    applied_date DATE,
+    notes VARCHAR(2000),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,13 @@
+package com.sujal.jobtracker;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+@SpringBootTest
+@ActiveProfiles("test")
+class JobtrackerApplicationTests {
+    @Test
+    void contextLoads() {
+    }
+}
