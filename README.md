@@ -1,100 +1,126 @@
+
 # CareerBoard — Job Application Tracker
 
-A full-stack portfolio project for managing job applications. The frontend is built with React and Vite, the backend uses Java 21 and Spring Boot, and MySQL stores the application records.
+CareerBoard is a full-stack web application designed to help job seekers organize and track their job applications in one place.
+
+Instead of managing opportunities in spreadsheets, users can track their applications, monitor interview progress, and manage their job search through a modern dashboard.
 
 ## Features
 
-- Dashboard cards for total applications, applied roles, interviews, and offers
-- Create, view, edit, and delete job applications
-- Search by company, role, or notes
-- Filter by application status
-- Store company, role, job URL, status, applied date, notes, and creation timestamp
+- Dashboard with application statistics
+- Add, view, edit, and delete job applications
+- Track application statuses, including Applied, Interview, and Offer
+- Search applications by company, role, or notes
+- Filter applications by status
+- Store job details, application dates, notes, and job links
 - Input validation and API error handling
-- Responsive interface for desktop and mobile
-- REST API tested separately with Postman
+- Responsive user interface
+- REST API for application management
 
-## Tech stack
+## Tech Stack
 
-- Frontend: React, Vite, JavaScript, CSS, Lucide icons
-- Backend: Java 21, Spring Boot, REST, JDBC, Maven
-- Database: MySQL
-- API testing: Postman
+**Frontend**
+- React
+- Vite
+- JavaScript
+- CSS
+- Lucide icons
 
-## Project layout
+**Backend**
+- Java 21
+- Spring Boot
+- Spring JDBC
+- REST API
+- Maven
+
+**Database**
+- MySQL
+
+**Testing**
+- JUnit
+- Spring Boot Test
+- Postman for API testing
+
+## Project Architecture
 
 ```text
-jobtracker/
-├── frontend/                  # React web application
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── styles.css
-│   ├── package.json
-│   ├── vite.config.js
-│   └── index.html
-├── src/main/java/              # Spring Boot API
-├── src/main/resources/
-│   ├── application.properties
-│   └── schema.sql
-├── src/test/                   # Backend tests
-├── pom.xml
-├── mvnw.cmd
-└── README.md
+CareerBoard
+|
+|-- frontend/          React + Vite user interface
+|
+|-- src/main/java/     Spring Boot backend
+|   |-- controller/    REST API endpoints
+|   |-- service/       Application business logic
+|   |-- repository/    Database operations
+|   |-- model/         Application data model
+|   |-- dto/           Request data validation
+|
+|-- src/main/resources/
+|   |-- application.properties
+|   |-- schema.sql
+|
+|-- pom.xml            Maven configuration
 ```
 
-## Requirements
+## Getting Started
+
+### Prerequisites
+
+Install the following:
 
 - Java 21
-- Node.js LTS (includes npm)
+- Node.js and npm
 - MySQL Server
-- A MySQL database named `jobtracker`
-- VS Code or another code editor
+- Git
 
-## 1. Configure MySQL
+### 1. Clone the repository
 
-Start the MySQL service and create the database. In MySQL Workbench, open a SQL tab and run:
+```bash
+git clone https://github.com/SujalPatil1616/CareerBoard.git
+cd CareerBoard
+```
+
+### 2. Create the database
+
+Open MySQL Workbench and execute:
 
 ```sql
 CREATE DATABASE IF NOT EXISTS jobtracker;
 ```
 
-The backend defaults to:
+### 3. Configure the database
 
-- URL: `jdbc:mysql://localhost:3306/jobtracker`
+The backend uses the following default database settings:
+
+- Database: `jobtracker`
 - Username: `root`
-- Password: empty by default
+- Port: `3306`
 
-**Do not commit your actual database password.** If your MySQL root account has a password, set it in the terminal before starting Spring Boot.
+Set the `MYSQL_PASSWORD` environment variable to your local MySQL password.
 
-PowerShell example (replace the placeholder with your local password):
-
-```powershell
-$env:MYSQL_USERNAME = "root"
-$env:MYSQL_PASSWORD = "YOUR_LOCAL_MYSQL_PASSWORD"
-```
-
-These variables apply to the current PowerShell terminal only.
-
-## 2. Start the backend
-
-Open a terminal in the project root (`jobtracker`).
+In Windows PowerShell:
 
 ```powershell
-.\mvnw.cmd test
-.\mvnw.cmd spring-boot:run
+$env:MYSQL_PASSWORD = "YOUR_MYSQL_PASSWORD"
 ```
 
-Keep this terminal running. The API should be available at `http://localhost:8080`.
+Replace the example value with your own password. Never publish your real database password on GitHub.
 
-If `mvnw.cmd` is blocked by Windows, use:
+### 4. Start the backend
+
+From the project root directory, run:
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-## 3. Start the frontend
+The backend will run at:
 
-Install Node.js LTS if `node` and `npm` are not available. Open a **second** terminal in VS Code:
+`http://localhost:8080`
+
+### 5. Start the frontend
+
+Open a second terminal and run:
 
 ```powershell
 cd frontend
@@ -102,52 +128,47 @@ npm install
 npm run dev
 ```
 
-Open the local address printed by Vite, normally `http://localhost:5173`.
+Open the local URL shown in the terminal. It is usually:
 
-The frontend calls `http://localhost:8080/api/applications` by default. To use a different API address, copy `frontend/.env.example` to `frontend/.env` and edit `VITE_API_URL`.
+`http://localhost:5173`
 
-## 4. API endpoints
+Keep both terminals running while using the application.
 
-| Method | Endpoint | Purpose |
+## API Endpoints
+
+The backend exposes application-management endpoints under `/api/applications`.
+
+| Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/applications` | List all applications |
-| GET | `/api/applications/{id}` | Get one application |
+| GET | `/api/applications` | Retrieve applications |
 | POST | `/api/applications` | Create an application |
 | PUT | `/api/applications/{id}` | Update an application |
 | DELETE | `/api/applications/{id}` | Delete an application |
 
-Example JSON body:
+## Run Tests
 
-```json
-{
-  "company": "Google",
-  "role": "Software Engineer",
-  "jobUrl": "https://careers.google.com/",
-  "status": "APPLIED",
-  "appliedDate": "2026-10-28",
-  "notes": "First test application"
-}
+From the project root, run:
+
+```powershell
+.\mvnw.cmd test
 ```
 
-Supported status values in the UI: `APPLIED`, `INTERVIEW`, `OFFER`, `REJECTED`.
+The automated backend tests help verify the application's behavior.
 
-## Troubleshooting
+## Future Improvements
 
-- **Frontend says it cannot connect:** confirm the Spring Boot terminal is running and MySQL is available.
-- **Database access denied:** verify `MYSQL_USERNAME` and `MYSQL_PASSWORD`.
-- **Database does not exist:** run the `CREATE DATABASE` SQL above.
-- **Port 8080 is busy:** stop the other application using that port before starting Spring Boot.
-- **Port 5173 is busy:** stop the other Vite process.
-- **`npm` is not recognized:** install Node.js LTS, reopen VS Code, and run `node -v` and `npm -v`.
+- User authentication and individual accounts
+- Cloud deployment
+- GitHub Actions continuous integration
+- Interview reminders and follow-up notifications
+- Advanced job-search analytics
 
-## GitHub checklist
+## Author
 
-Before publishing:
-- Never commit database passwords, `.env` files, `node_modules`, or `target`.
-- Add screenshots of the running application to the README.
-- Include setup instructions and note any known limitations.
-- Test from a clean checkout if possible.
+**Sujal Patil**
 
-## Current scope
+GitHub: [@SujalPatil1616](https://github.com/SujalPatil1616)
 
-This is a local-development portfolio project. It does not yet include user accounts/authentication, cloud deployment, or production secrets management.
+---
+
+Built as a full-stack portfolio project to practice frontend development, REST APIs, database integration, and software testing.
